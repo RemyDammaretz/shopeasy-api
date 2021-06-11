@@ -32,7 +32,7 @@ CREATE TABLE `product-categories` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `urlImg` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `product-categories`
@@ -52,7 +52,7 @@ CREATE TABLE `products` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `productCategoryId` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `products`
@@ -73,7 +73,7 @@ CREATE TABLE `products-in-sections` (
   `id` int NOT NULL,
   `idProduct` int NOT NULL,
   `idSection` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `products-in-sections`
@@ -96,7 +96,7 @@ CREATE TABLE `sections` (
   `name` varchar(255) NOT NULL,
   `x` int NOT NULL,
   `y` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `sections`
@@ -117,7 +117,7 @@ CREATE TABLE `shops` (
   `name` varchar(255) NOT NULL,
   `urlMap` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `mapScale` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `shops`

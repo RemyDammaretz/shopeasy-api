@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^maps/(.*)$ maps/$1 [QSA,NC,L]
+RewriteRule ^img/(.*)$ img/$1 [QSA,NC,L]
+RewriteRule ^(.*)$ index.php?request=$1 [QSA,NC,L]
