@@ -89,6 +89,65 @@ if (valider("request")) {
 	debug("action", $action);
 
 	switch ($action) {
+		case "POST_authenticate":
+			if ($user = valider("user"))
+			if ($password = valider("password")) {
+				if ($hash = validerUser($user, $password)) {
+					$data["hash"] = $hash;
+					$data["user"] = getUserByPseudo($user);
+					$data["success"] = true;
+					$data["status"] = 202;
+				} else {
+					// connexion échouée
+					$data["status"] = 401;
+				}
+			}
+			break;
+		case "GET_profile":
+			if ($connected) {
+				$data["profile"] = getUser($connectedId);
+				$data["success"] = true;
+				$data["status"] = 200;
+			} else {
+				$data["status"] = 403;
+			}
+			break;
+		case "POST_users":
+			// User creation
+			if ($pseudo = valider("user"))
+			if ($pass = valider("password")) {
+				if ($id = mkUser($pseudo, $pass)) {
+					$data["user"] = getUser($id);
+					$data["success"] = true;
+					$data["status"] = 201;
+				} else {
+					// User already exists
+					$data["success"] = false;
+					$data["status"] = 403;
+				}
+			} else {
+				$data["success"] = false;
+				$data["status"] = 400;
+			}
+			break;
+		case "PUT_users":
+			// Update user
+			if ($connected) {
+				if ($minNutriScore = valider("minNutriScorePreference"))
+				if ($allergens = valider("allergens")) {
+					updateUser($connectedId, $minNutriScore, $allergens);
+					$data["success"] = true;
+					$data["status"] = 200;
+					$data["user"] = getUser($connectedId);
+				} else {
+					$data["success"] = false;
+					$data["status"] = 400;
+				}
+			} else {
+				$data["success"] = false;
+				$data["status"] = 403;
+			}
+			break;
 		case "GET_shops":
 			if ($idEntite1) {
 				$shop = getShop($idEntite1);

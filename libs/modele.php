@@ -3,6 +3,55 @@ include_once("maLibSQL.pdo.php");
 // définit les fonctions SQLSelect, SQLUpdate...
 
 
+// Users ///////////////////////////////////////////////////
+function validerUser($pseudo, $pass){
+	$SQL = "SELECT hash FROM users WHERE pseudo='$pseudo' AND pass='$pass'";
+	if ($hash=SQLGetChamp($SQL))
+		return $hash;
+	else return false;
+}
+
+function getUser($idUser) {
+	$SQL = "SELECT id, pseudo, minNutriScorePreference, allergens FROM users WHERE id='$idUser'";
+	$rs = parcoursRs(SQLSelect($SQL));
+	if (count($rs)) return $rs[0]; 
+	else return array();
+}
+
+function getUserByPseudo($pseudo) {
+	$SQL = "SELECT id, pseudo, minNutriScorePreference, allergens FROM users WHERE pseudo='$pseudo'";
+	$rs = parcoursRs(SQLSelect($SQL));
+	if (count($rs)) return $rs[0]; 
+	else return array();
+}
+
+function mkUser($pseudo, $pass){
+	$dataUser = getUserByPseudo($pseudo);
+	if (count($dataUser) > 0) return false;
+
+	$hash = mkHash($pseudo); 
+	$SQL = "INSERT INTO users(pseudo,pass,hash) VALUES('$pseudo', '$pass', '$hash')";
+	$idUser = SQLInsert($SQL);
+	$hash = mkHash($idUser); 
+	return $idUser; 
+}
+
+function mkHash($pseudo) { 
+	$payload = $pseudo. date("H:i:s");
+	$hash = md5($payload); 
+	return $hash; 
+}
+
+function updateUser($userId, $minNutriScorePreference, $allergens) {
+	$SQL = "UPDATE users SET minNutriScorePreference='$minNutriScorePreference', allergens='$allergens' WHERE id=$userId";
+	SQLUpdate($SQL);
+	return 1; 
+}
+
+function hash2id($hash) {
+	$SQL = "SELECT id FROM users WHERE hash='$hash'";
+	return SQLGetChamp($SQL); 
+}
 
 // Shops ///////////////////////////////////////////////////
 
